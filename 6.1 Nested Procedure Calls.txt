@@ -1,0 +1,33 @@
+%include "io64.inc"
+
+section .data
+action db "Proc3 is called",0
+
+section .text
+global CMAIN
+
+Proc3:
+    PRINT_STRING action
+    ret
+
+Proc2:
+    call Proc3    
+    ret
+
+Proc1:
+    call Proc2   
+    ret
+
+Proc:
+    push 100
+    PRINT_STRING action
+	; it will return segmentation fault
+    ret
+    
+CMAIN:   
+    call Proc1
+
+    Call Proc
+    
+    xor rax, rax
+    ret

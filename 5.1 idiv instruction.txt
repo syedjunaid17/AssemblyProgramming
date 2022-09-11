@@ -1,0 +1,55 @@
+%include "io64.inc"
+
+section .text
+global CMAIN
+CMAIN:
+    ; idiv reg
+    ; idiv mem   
+    ; signed divide instruction 
+    ; sign extension. Copying the sign bit of the lower byte value to all the upper byte	 
+    ; idiv 8-bit      ah   al  ->   al     ah
+    ; idiv 16-bit     dx   ax  ->   ax     dx  
+    ; idiv 32-bit    edx  eax  ->  eax    edx
+    xor edx, edx 
+    mov eax, -100 ; here we are getting wrong value , not -50
+    mov ebx, 2
+    idiv ebx 
+
+    xor edx, -1  ; here we copied the sign bit -100 to edx (making all the bits to 1)
+    mov eax, -100 ; if sign bit is zero, change the all the bits of edx to 0
+    mov ebx, 2
+    idiv ebx 		
+    ; idiv 64-bit    rdx  rax  ->  rax    rdx
+    
+    ; cbw  ; convert byte to word
+    mov al,40
+    cbw ; ax has the value of 40
+    mov bl,10
+    idiv bl
+    
+    ; cwd 
+    mov ax,-200
+    cwd
+    mov bx,100
+    idiv bx
+
+    ; cdq
+    mov eax,6000
+    cdq
+    mov ebx,-6
+    idiv ebx
+
+    ; cqo
+    mov rax,307
+    cqo ; sign bit rax into register rdx
+    mov rbx,5
+    idiv rbx
+    
+    ; divide overflow
+    ; mov ax,-8000 ; -800 to store in al, it is too large to store in al, we get
+    ; Arithmetic exception error message
+    ; mov bl,10
+    ; idiv bl
+       
+    xor rax, rax
+    ret

@@ -1,0 +1,28 @@
+%include "io64.inc"
+
+section .data
+sum dq 10
+
+section .text
+global CMAIN
+CMAIN:    
+    mov rax,[sum]
+	;mov` puts the value at the specified address of `source` (second argument) into 	; `destination` (first argument).
+	;`lea` puts the address of the specified `source` into the `destination`.
+	;MOV  EAX, [ESP+4]
+
+	;This will move the content of what ESP+4 points to into EAX.
+
+	;LEA EAX, [EBX*8]
+
+	;This will move the effective address EBX * 8 into EAX, not what is found in that 	;location. As you can see, also, it is possible to multiply by factors of two 		; (scaling) while a MOV is limited to adding/subtracting
+
+    mov rax,[sum]
+    lea rbx,[sum]
+    mov rcx,[rbx]
+    
+    lea rdx,[rax+10]
+    
+    xor rax, rax
+    ret
+
